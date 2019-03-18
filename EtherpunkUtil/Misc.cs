@@ -11,7 +11,7 @@ namespace EtherpunkUtilCore
     /// <summary>
     /// Misc classes that don't belong anywhere special.
     /// </summary>
-    public class Misc
+    public static class Misc
     {
         /// <summary>
         /// Generates a random unique code given a prefix and a length.
