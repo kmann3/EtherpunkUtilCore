@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 /// <summary>
 /// Etherpunk Utility Library
 /// </summary>
-namespace EtherpunkUtil
+namespace EtherpunkUtilCore
 {
     /// <summary>
     /// Misc classes that don't belong anywhere special.
