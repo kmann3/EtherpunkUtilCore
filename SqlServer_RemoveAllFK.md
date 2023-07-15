@@ -1,3 +1,6 @@
+-- Removes all Foreign keys in a database
+-- Source: https://stackoverflow.com/questions/43044683/how-to-drop-all-foreign-keys-from-a-sql-server-database
+
 DECLARE @SQL VARCHAR(MAX)=''
 SELECT @SQL = @SQL + 'ALTER TABLE ' + QUOTENAME(FK.TABLE_SCHEMA) + '.' + QUOTENAME(FK.TABLE_NAME) + ' DROP CONSTRAINT [' + RTRIM(C.CONSTRAINT_NAME) +'];' + CHAR(13)
 --SELECT K_Table = FK.TABLE_NAME, FK_Column = CU.COLUMN_NAME, PK_Table = PK.TABLE_NAME, PK_Column = PT.COLUMN_NAME, Constraint_Name = C.CONSTRAINT_NAME
