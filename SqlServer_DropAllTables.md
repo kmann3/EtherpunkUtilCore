@@ -1,23 +1,10 @@
 -- Drops all tables in a database. Run remove all FK's first
 -- Source: https://stackoverflow.com/questions/27606518/how-to-drop-all-tables-from-a-database-with-one-sql-query
 
-DECLARE @Sql NVARCHAR(500) DECLARE @Cursor CURSOR
+DECLARE @sql NVARCHAR(max)=''
 
-SET @Cursor = CURSOR FAST_FORWARD FOR
-SELECT DISTINCT sql = 'ALTER TABLE [' + tc2.TABLE_SCHEMA + '].[' +  tc2.TABLE_NAME + '] DROP [' + rc1.CONSTRAINT_NAME + '];'
-FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS rc1
-LEFT JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS tc2 ON tc2.CONSTRAINT_NAME =rc1.CONSTRAINT_NAME
+SELECT @sql += ' Drop table ' + QUOTENAME(TABLE_SCHEMA) + '.'+ QUOTENAME(TABLE_NAME) + '; '
+FROM   INFORMATION_SCHEMA.TABLES
+WHERE  TABLE_TYPE = 'BASE TABLE'
 
-OPEN @Cursor FETCH NEXT FROM @Cursor INTO @Sql
-
-WHILE (@@FETCH_STATUS = 0)
-BEGIN
-Exec sp_executesql @Sql
-FETCH NEXT FROM @Cursor INTO @Sql
-END
-
-CLOSE @Cursor DEALLOCATE @Cursor
-GO
-
-EXEC sp_MSforeachtable 'DROP TABLE ?'
-GO
+Exec Sp_executesql @sql
